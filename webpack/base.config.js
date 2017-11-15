@@ -4,6 +4,7 @@
 const path = require('path');
 const entry = require('./entry');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: entry,
     output: {
@@ -44,6 +45,16 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin('css/style.css')
-    ]
+        new ExtractTextPlugin('css/style.css'),
+        new HtmlWebpackPlugin({
+            title: 'my architecture',
+            filename: 'index.html',
+            template: path.resolve(process.cwd(), './test.html')
+        })
+    ],
+    devServer: {
+        contentBase: path.join(__dirname, "dist"),
+        compress: true,
+        port: 9000
+    }
 }
