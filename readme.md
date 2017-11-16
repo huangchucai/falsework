@@ -20,6 +20,7 @@
 - dev/prod [编译环境]
 
 # file structure
+```
 |- src
 |- |- app
 |- |- components
@@ -27,3 +28,4 @@
 |- |- global
 |- |- |- reset.css
 |- |- img
+```
