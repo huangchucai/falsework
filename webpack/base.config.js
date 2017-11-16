@@ -9,29 +9,32 @@ module.exports = {
     entry: entry,
     output: {
         path: path.resolve(process.cwd(), './dist'),
-        filename: 'index.js'
+        filename: '[name].js',
+        publicPath: '/dist'
     },
-    watch: true,
     context: path.resolve(process.cwd(), 'src/app'),
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.jsx?$/,
                 loader: 'babel-loader'
             },
             {
-                test: /\.scss$/,
-                loader: "sass-loader"
+                test: /\.vue$/,
+                loader: 'vue-loader'
             },
             {
                 test: /\.css$/,
-                loader: "css-loader"
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: ["css-loader"]
+                })
             },
             {
                 test: /\.styl/,
                 use: ExtractTextPlugin.extract({
                     fallback: "style-loader",
-                    use: ["css-loader","stylus-loader"]
+                    use: ["css-loader", "stylus-loader"]
                 })
             },
             {
@@ -49,12 +52,10 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'my architecture',
             filename: 'index.html',
-            template: path.resolve(process.cwd(), './test.html')
+            template: path.resolve(process.cwd(), 'template.html')
         })
     ],
-    devServer: {
-        contentBase: path.join(__dirname, "dist"),
-        compress: true,
-        port: 9000
+    resolve: {
+        alias: {'vue': 'vue/dist/vue.js'}
     }
 }
